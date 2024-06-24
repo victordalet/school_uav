@@ -1,7 +1,11 @@
+import sys
+
 import cv2
 import torch
 import time
 import numpy as np
+
+number_sample_frames: int = int(sys.argv[1])
 
 model_type = "MiDaS_small"  # MiDaS v2.1 - Small   (lowest accuracy, highest inference speed)
 
@@ -53,6 +57,13 @@ while cap.isOpened():
 
     depth_map = (depth_map * 255).astype(np.uint8)
     depth_map = cv2.applyColorMap(depth_map, cv2.COLORMAP_MAGMA)
+
+    for i in range(0, number_sample_frames):
+        x = int(img.shape[1] / number_sample_frames * i)
+        cv2.line(img, (x, 0), (x, img.shape[0]), (0, 255, 0), 2)
+
+    cv2.circle(img, (np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[1],
+                     np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[0]), 5, (0, 0, 255), 3)
 
     cv2.putText(img, f'FPS: {int(fps)}', (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), 2)
     cv2.imshow('Image', img)

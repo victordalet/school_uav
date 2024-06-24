@@ -2,7 +2,7 @@
 
 ---
 
-## 1. Discover the environment
+## 1. Create the environment
 
 ---
 

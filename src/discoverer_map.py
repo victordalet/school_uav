@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import cv2
 import numpy as np
 import torch
@@ -23,12 +25,6 @@ class DiscovererMap:
         else:
             self.transform = self.midas_transforms.small_transform
 
-    def stop_discovery(self):
-        self.continue_discovery = False
-
-    def discover(self, frame: cv2.typing.MatLike):
-        depth_map = self.transform_depth_map(frame)
-
     def transform_depth_map(self, frame: cv2.typing.MatLike) -> cv2.typing.MatLike:
         img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
@@ -51,3 +47,8 @@ class DiscovererMap:
         depth_map = (depth_map * 255).astype(np.uint8)
         depth_map = cv2.applyColorMap(depth_map, cv2.COLORMAP_MAGMA)
         return depth_map
+
+    @staticmethod
+    def get_point_depth(depth_map: cv2.typing.MatLike) -> Tuple[int, int]:
+        return (np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[1],
+                np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[0])
