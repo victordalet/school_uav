@@ -7,7 +7,9 @@ import numpy as np
 
 number_sample_frames: int = int(sys.argv[1])
 
-model_type = "MiDaS_small"  # MiDaS v2.1 - Small   (lowest accuracy, highest inference speed)
+model_type = (
+    "MiDaS_small"  # MiDaS v2.1 - Small   (lowest accuracy, highest inference speed)
+)
 
 midas = torch.hub.load("intel-isl/MiDaS", model_type)
 
@@ -25,7 +27,6 @@ else:
 cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
-
     success, img = cap.read()
 
     start = time.time()
@@ -46,7 +47,9 @@ while cap.isOpened():
 
     depth_map = prediction.cpu().numpy()
 
-    depth_map = cv2.normalize(depth_map, None, 0, 1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_64F)
+    depth_map = cv2.normalize(
+        depth_map, None, 0, 1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_64F
+    )
 
     end = time.time()
     totalTime = end - start
@@ -62,12 +65,22 @@ while cap.isOpened():
         x = int(img.shape[1] / number_sample_frames * i)
         cv2.line(img, (x, 0), (x, img.shape[0]), (0, 255, 0), 2)
 
-    cv2.circle(img, (np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[1],
-                     np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[0]), 5, (0, 0, 255), 3)
+    cv2.circle(
+        img,
+        (
+            np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[1],
+            np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[0],
+        ),
+        5,
+        (0, 0, 255),
+        3,
+    )
 
-    cv2.putText(img, f'FPS: {int(fps)}', (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), 2)
-    cv2.imshow('Image', img)
-    cv2.imshow('Depth Map', depth_map)
+    cv2.putText(
+        img, f"FPS: {int(fps)}", (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), 2
+    )
+    cv2.imshow("Image", img)
+    cv2.imshow("Depth Map", depth_map)
 
     if cv2.waitKey(5) & 0xFF == 27:
         break

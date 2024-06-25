@@ -6,7 +6,6 @@ import torch
 
 
 class DiscovererMap:
-
     def __init__(self):
         self.map = {}
         self.continue_discovery = True
@@ -14,7 +13,9 @@ class DiscovererMap:
 
         self.midas = torch.hub.load("intel-isl/MiDaS", self.model_type)
 
-        self.device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        self.device = (
+            torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+        )
         self.midas.to(self.device)
         self.midas.eval()
 
@@ -42,7 +43,9 @@ class DiscovererMap:
 
         depth_map = prediction.cpu().numpy()
 
-        depth_map = cv2.normalize(depth_map, None, 0, 1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_64F)
+        depth_map = cv2.normalize(
+            depth_map, None, 0, 1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_64F
+        )
 
         depth_map = (depth_map * 255).astype(np.uint8)
         depth_map = cv2.applyColorMap(depth_map, cv2.COLORMAP_MAGMA)
@@ -50,5 +53,7 @@ class DiscovererMap:
 
     @staticmethod
     def get_point_depth(depth_map: cv2.typing.MatLike) -> Tuple[int, int]:
-        return (np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[1],
-                np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[0])
+        return (
+            np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[1],
+            np.unravel_index(np.argmin(depth_map, axis=None), depth_map.shape)[0],
+        )

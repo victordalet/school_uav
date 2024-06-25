@@ -4,7 +4,6 @@ from djitellopy import Tello
 
 
 class UAV:
-
     def __init__(self):
         self.drone = Tello()
         self.drone.connect()
@@ -25,7 +24,9 @@ class UAV:
     def get_frame(self):
         return self.drone.get_frame_read().frame
 
-    def orientate(self, point: Tuple[int, int], width_picture: int, height_picture: int) -> None:
+    def orientate(
+        self, point: Tuple[int, int], width_picture: int, height_picture: int
+    ) -> None:
         width, height = width_picture // 2, height_picture // 2
         diff_x = point[0] - width
         diff_y = point[1] - height

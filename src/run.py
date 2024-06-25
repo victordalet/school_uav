@@ -2,7 +2,7 @@ import sys
 
 import cv2
 
-from src.const import SPEED_FORWARD_UAV, SPEED_LEFT_UAV, SPEED_RIGHT_UAV
+from src.const import SPEED_LEFT_UAV, SPEED_RIGHT_UAV
 from src.discoverer_map import DiscovererMap
 from src.load_map import LoadMap
 from src.student import Student
@@ -10,12 +10,12 @@ from src.uav import UAV
 
 
 class Run:
-
     def __init__(self):
         self.config: str = sys.argv[1]
         self.map: LoadMap = LoadMap(sys.argv[2])
         self.student_detector: Student = Student()
         self.way = self.map.get_optimal_actions()
+        self.speed: int = self.map.get_speed()
         self.index_way: int = 0
         self.index_action_by_way: int = 0
         self.run: bool = True
@@ -46,7 +46,7 @@ class Run:
 
     def navigate(self):
         if self.way[self.index_way][self.index_action_by_way] == "UP":
-            self.uav.forward(SPEED_FORWARD_UAV)
+            self.uav.forward(self.speed)
         elif self.way[self.index_way][self.index_action_by_way] == "LEFT":
             self.uav.left(SPEED_LEFT_UAV)
         elif self.way[self.index_way][self.index_action_by_way] == "RIGHT":
