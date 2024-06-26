@@ -24,6 +24,8 @@ class Run:
         self.launch()
 
     def launch(self) -> None:
+        if self.config == "reco":
+            self.student_detector.learn()
         self.uav.take_off()
         cap = cv2.VideoCapture(0)
         while self.run:
@@ -39,12 +41,17 @@ class Run:
             self.index_action_by_way = 0
             if self.config == "count":
                 self.student_detector.search_number_total_students(img)
+            elif self.config == "reco":
+                self.student_detector.recognize(img)
 
         if self.index_way == len(self.way):
-            self.student_detector.get_result_csv()
+            if self.config == "count":
+                self.student_detector.get_result_csv()
+            elif self.config == "reco":
+                self.student_detector.get_result_csv()
             self.run = False
 
-    def navigate(self):
+    def navigate(self) -> None:
         if self.way[self.index_way][self.index_action_by_way] == "UP":
             self.uav.forward(self.speed)
         elif self.way[self.index_way][self.index_action_by_way] == "LEFT":

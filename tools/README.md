@@ -28,3 +28,12 @@ python tools/display_map.py {path.png}
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 python tools/number_student.py
 ```
+
+## 4. Display learning student
+
+---
+
+```bash
+export PYTHONPATH=$PYTHONPATH:$(pwd)
+python tools/learn_student.py {image_test.png}
+```
