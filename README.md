@@ -2,12 +2,21 @@
 
 ---
 
+## 0. Installation
+
+---
+
+```
+pip install -r requirements.txt
+```
+
 ## 1. Create the environment
 
 ---
 
 
 You can use this web site to draw the environement like this https://jspaint.app/
+
 - draw ways in black
 - draw start in red
 - draw classes in green
@@ -27,6 +36,18 @@ python src/run.py count {map.png}
 ## 3. Reconnaissance mission
 
 ---
+
+### 3.1. Create classes directory
+
+---
+
+```
+mkdir classes
+```
+
+inside add folders in classes where you could add student faces
+
+### 3.3. Run
 
 ```
 export PYTHONPATH=$PYTHONPATH:$(pwd)
