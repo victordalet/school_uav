@@ -1,7 +1,6 @@
 from typing import List, Tuple
 
 import cv2
-import numpy as np
 
 from src.path_finder import PathFinder
 
@@ -81,7 +80,9 @@ class LoadMap:
 
         return actions
 
-    def get_actions(self, start: Tuple[int, int], goal: Tuple[int, int], is_start: bool) -> List[str]:
+    def get_actions(
+        self, start: Tuple[int, int], goal: Tuple[int, int], is_start: bool
+    ) -> List[str]:
         way = self.path_finder.create_path(start, goal)
         actions_simplified = []
         actions = []

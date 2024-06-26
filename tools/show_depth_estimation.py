@@ -7,9 +7,7 @@ import numpy as np
 
 number_sample_frames: int = int(sys.argv[1])
 
-model_type = (
-    "MiDaS_small"  # MiDaS v2.1 - Small   (lowest accuracy, highest inference speed)
-)
+model_type = "MiDaS_small"
 
 midas = torch.hub.load("intel-isl/MiDaS", model_type)
 
