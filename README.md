@@ -7,28 +7,28 @@
 ---
 
 
-## 2. Create env file
+You can use this web site to draw the environement like this https://jspaint.app/
+- draw ways in black
+- draw start in red
+- draw classes in green
+- draw in the first line in blue the estimated 1 meter (to obtain a good speed of the drone)
+
+![map.png](assets/map.png)
+
+## 2. Counting mission
 
 ---
 
+```
+export PYTHONPATH=$PYTHONPATH:$(pwd)
+python src/run.py count {map.png}
+```
 
-## 3. Autonomous control 
-
----
-
-### 3.1 - Display map to get coordinates
-
----
-
-### 3.2 - Configure number and location
+## 3. Reconnaissance mission
 
 ---
 
-### 3.3 - Start the mission
-
-
----
-
-## 4. Reconnaissance mission
-
----
+```
+export PYTHONPATH=$PYTHONPATH:$(pwd)
+python src/run.py reco {map.png}
+```
